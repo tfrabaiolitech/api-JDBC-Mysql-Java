@@ -27,7 +27,8 @@ public class Program {
 					"insert into seller "
 					+"(Name,Email, BirthDate,BaseSalary,DepartmentId) "
 					+"values "
-					+"(?, ?, ?, ?, ?)");
+					+"(?, ?, ?, ?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
 					
 			st.setString(1, "Thiago Rabaioli");
 			st.setString(2, "tfrabaioli@gmail.com");
@@ -37,7 +38,17 @@ public class Program {
 			
 			int rowsAffected  = st.executeUpdate();
 			
-			System.out.println("Done " + rowsAffected);
+			if(rowsAffected > 0) {
+			ResultSet rs =	st.getGeneratedKeys();
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				System.out.println("Done! Id= " + id );
+			}
+			}else {
+				System.out.println("No rows affected " + rowsAffected);
+			}
+			
+		
 					
 			
 		}
@@ -47,6 +58,10 @@ public class Program {
 		}
 		catch(ParseException e) {
 			e.printStackTrace();
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeConnection();
 		}
 	
 
