@@ -23,18 +23,23 @@ public class Program {
 		
 		try {
 			conn = DB.getConnection();
+//			st = conn.prepareStatement(
+////					"insert into seller "
+////					+"(Name,Email, BirthDate,BaseSalary,DepartmentId) "
+////					+"values "
+////					+"(?, ?, ?, ?, ?)", 
+////					Statement.RETURN_GENERATED_KEYS);
+//					
+//			st.setString(1, "Thiago Rabaioli");
+//			st.setString(2, "tfrabaioli@gmail.com");
+//			st.setDate(3, new java.sql.Date(sdf.parse("22/09/1985").getTime()));
+//			st.setDouble(4, 1500.00);
+//			st.setInt(5, 4);
+			
 			st = conn.prepareStatement(
-					"insert into seller "
-					+"(Name,Email, BirthDate,BaseSalary,DepartmentId) "
-					+"values "
-					+"(?, ?, ?, ?, ?)", 
-					Statement.RETURN_GENERATED_KEYS);
-					
-			st.setString(1, "Thiago Rabaioli");
-			st.setString(2, "tfrabaioli@gmail.com");
-			st.setDate(3, new java.sql.Date(sdf.parse("22/09/1985").getTime()));
-			st.setDouble(4, 1500.00);
-			st.setInt(5, 4);
+					"insert into department (Name) values ('D1'), ('D2')",
+					Statement.RETURN_GENERATED_KEYS
+					);
 			
 			int rowsAffected  = st.executeUpdate();
 			
@@ -56,9 +61,9 @@ public class Program {
 			
 			e.printStackTrace();
 		}
-		catch(ParseException e) {
-			e.printStackTrace();
-		}
+//		catch(ParseException e) {
+//			e.printStackTrace();
+//		}
 		finally {
 			DB.closeStatement(st);
 			DB.closeConnection();
