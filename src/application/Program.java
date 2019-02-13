@@ -2,13 +2,11 @@ package application;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 
 import db.DB;
+import db.DbIntegrityException;
 
 
 public class Program {
@@ -19,25 +17,24 @@ public class Program {
 		
 		PreparedStatement st = null;
 		
+		
 		try {
 			conn = DB.getConnection();
-			
 			st = conn.prepareStatement(
-					"UPDATE seller "
-					+"SET BaseSalary = BaseSalary + ? "
-					+"WHERE (departmentId = ?)"
+					"DELETE FROM department where Id = ? "
+					
 					);
 			
-			st.setDouble(1, 10.00);
-			st.setInt(2, 2);
+			st.setInt(1, 6);
 			
-			int rowsAffected = st.executeUpdate();
-			
-			System.out.println("Done! " + rowsAffected);
-					
-		}catch(SQLException e) {
-			e.printStackTrace();
+         int rowsAffected  = st.executeUpdate();
+         System.out.println("Linhas alteradas: " + rowsAffected);
 		}
+		
+		catch(SQLException e) {
+			throw new DbIntegrityException(e.getMessage());
+		}
+
 		finally {
 			DB.closeStatement(st);
 			DB.closeConnection();
