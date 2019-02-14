@@ -41,10 +41,13 @@ public class Program {
 				
 			}	
            
+		 System.out.println("\n ==== Test 4: seller Insert  ====" );
 		
-		
+			Seller newSeller = new Seller(null, "Catarina", "catarina@gmail.com", new Date(), 2000.0, department);
 			
+			sellerDao.insert(newSeller);
+			System.out.println("Inserted New Seller " + newSeller.getId() );
 		}	
-	
+		
     }
 
